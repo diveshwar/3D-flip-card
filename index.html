@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>3D Flip Card (HTML & CSS)</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- Link to stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+    <h1 class="sr-only">Interactive 3D Flip Card demo</h1>
+
+    <!-- Card container (semantic article) -->
+    <article class="card" tabindex="0" aria-label="Profile card. Hover or focus to flip.">
+      <!-- inner element that performs the 3D rotation -->
+      <div class="card-inner">
+        <!-- FRONT -->
+        <div class="card-face card-front" aria-hidden="false">
+          <img src="images/Diveshwar Photo.jpg" alt="Diveshwar Photo" class="card-image">
+          <div class="card-front-body">
+            <h3 class="card-title">Diveshwar</h3>
+            <p class="card-tagline">UI Designer • Creative Technologist</p>
+          </div>
+        </div>
+
+        <!-- BACK -->
+        <div class="card-face card-back" aria-hidden="true">
+          <div class="card-back-body">
+            <h3 class="card-title">About Diveshwar</h3>
+            <p class="card-desc">
+              Passionate about crafting delightful interfaces and micro-interactions.
+              Specialises in responsive design, prototyping and front-end polish.
+            </p>
+            <a class="card-btn" href="#" role="button">Learn More</a>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+</body>
+</html>

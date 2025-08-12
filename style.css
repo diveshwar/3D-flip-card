@@ -1,0 +1,168 @@
+/* style.css
+   Pure CSS 3D flip card.
+   Uses transform, transition, transform-style, perspective, backface-visibility.
+   Author: (you)
+*/
+
+:root{
+  --card-w: 360px;
+  --card-h: 480px;
+  --radius: 14px;
+  --elev: 0 10px 25px rgba(10,20,30,0.12);
+  --accent: #6c5ce7;
+  --muted: #6b7280;
+  --bg: #f6f8fb;
+  --glass: rgba(255,255,255,0.85);
+  --duration: 0.6s; /* animation duration */
+  --font: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+* { box-sizing: border-box; }
+html,body { height: 100%; margin: 0; font-family: var(--font); background: var(--bg); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; color: #111827; }
+
+/* Visually-hidden heading for accessibility (keeps semantics but hides it) */
+.sr-only {
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+
+/* Center the card on the page */
+.page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+}
+
+/* Card wrapper provides perspective (depth) */
+.card {
+  width: var(--card-w);
+  height: var(--card-h);
+  perspective: 1100px; /* creates depth for 3D children */
+  outline: none; /* outline handled by focus style below */
+}
+
+/* Inner element — this is what we rotate */
+.card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform var(--duration) ease; /* smooth animation */
+  transform-style: preserve-3d; /* keep 3D space for children */
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+/* Flip on hover — rotate 180deg around Y axis */
+.card:hover .card-inner,
+.card:focus-within .card-inner,
+.card:focus .card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Each face (front/back) */
+.card-face {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius);
+  box-shadow: var(--elev);
+  backface-visibility: hidden; /* hide back of each face when rotated away */
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* FRONT face styles */
+.card-front {
+  background: linear-gradient(180deg, #ffffff, var(--glass));
+  border: 1px solid rgba(15,23,42,0.04);
+}
+
+/* Image (top) */
+.card-image {
+  width: 100%;
+  height: 82%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Front content */
+.card-front-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.card-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+.card-tagline {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* BACK face styles - rotated so it shows after inner rotates */
+.card-back {
+  background: linear-gradient(180deg, #f3f0ff, #eef2ff);
+  transform: rotateY(180deg); /* back is pre-rotated so it's visible after inner rotates 180deg */
+  border: 1px solid rgba(108,92,231,0.07);
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+}
+
+/* Back content layout */
+.card-back-body {
+  text-align: center;
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  width: 100%;
+}
+.card-desc {
+  margin: 0;
+  color: #273043;
+  line-height: 1.45;
+  font-size: 0.98rem;
+  max-width: 26ch;
+  margin-inline: auto;
+}
+
+/* CTA button (styled link) */
+.card-btn {
+  display: inline-block;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+  border: 0;
+  background: linear-gradient(90deg, var(--accent), #9b8bf6);
+  color: white;
+  box-shadow: 0 6px 18px rgba(108,92,231,0.18);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+}
+.card-btn:active { transform: translateY(1px) scale(0.995); }
+.card-btn:hover { opacity: 0.96; }
+
+/* Focus ring for keyboard users (accessibility) */
+.card:focus {
+  outline: none;
+  box-shadow: 0 6px 22px rgba(99,102,241,0.18);
+  border-radius: calc(var(--radius) + 2px);
+}
+
+/* Responsive scaling for smaller screens */
+@media (max-width: 420px) {
+  :root { --card-w: 320px; --card-h: 440px; }
+}
